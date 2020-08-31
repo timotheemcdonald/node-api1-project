@@ -7,7 +7,7 @@ server.use(express.json())
 
 let resource = [
     {
-        id: shortid.generate(), // hint: use the shortid npm package to generate it
+        id: 1, // hint: use the shortid npm package to generate it
         name: "Jane Doe", // String, required
         bio: "Not Tarzan's Wife, another Jane",  // String, required
       }
@@ -70,15 +70,18 @@ server.put("/api/users/:id", (req,res) => {
 
 server.delete("/api/users/:id", (req, res) => {
     const id = Number(req.params.id)
-    resource = resouce.filter(data => data.id !== id)
     let found = resource.find(data => data.id === id)
+    let newData = resource.filter(data => data.id !== id)
+
 
     try{
+      
     if(!found){
         res.status(404).json({message: "The user with the specified ID does not exist." })
-    }
+    }else{
 
-    res.status(200).json(resource)}
+
+    res.status(200).json(newData)}}
     catch{res.status(500).json({ errorMessage: "The user could not be removed" })}
 })
 
